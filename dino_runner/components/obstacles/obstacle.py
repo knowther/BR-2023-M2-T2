@@ -12,8 +12,11 @@ class Obstacle(Sprite):
         self.rect.x = SCREEN_WIDTH
 
     def update(self, game_speed, obstacles):
+        #essa parte aqui vai reduzindo o valor no eixo x de acordo com o valor de game speed, ex: game speed = 20
+        #a cada frame ele vai reduzindo 20 até chegar no final da tela
         self.rect.x -= game_speed
 
+        #quando a imagem chega no final, ela é removida
         if self.rect.x < -self.rect.width:
             obstacles.pop()
 
