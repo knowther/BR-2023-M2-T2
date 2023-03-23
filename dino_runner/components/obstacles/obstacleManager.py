@@ -26,12 +26,19 @@ class ObstacleManager:
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed, self.obstacles)
             if game.player.dino_rect.colliderect(obstacle.rect):
-                if not game.player.has_power_up:
+                if game.player.hammer:
+                    self.obstacles.remove(obstacle)
+                    print(game.player.hammer)
+                elif game.player.shield:
+                    print(game.player.shield)
+                    pass
+                elif game.player.time_traveling:
+                    pass
+                else:
                     pygame.time.delay(500)
                     game.playing = False
                     game.death_count += 1
-                else:
-                    self.obstacles.remove(obstacle)
+
 
 
 

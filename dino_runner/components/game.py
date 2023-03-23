@@ -1,6 +1,7 @@
 import pygame
 
-from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE
+from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, CLOCK, SHIELD, \
+    HAMMER
 from dino_runner.components.dinossaur import Dinosaur
 from dino_runner.components.obstacles.obstacleManager import ObstacleManager
 from dino_runner.utils.text_utils import draw_message_component
@@ -22,7 +23,7 @@ class Game:
         self.score = 0
         self.death_count = 0
         self.high_score = 0
-
+        self.old_game_speed = 0
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
         self.power_up_manager = PowerUpManager()
@@ -56,9 +57,8 @@ class Game:
         user_input = pygame.key.get_pressed()
         self.player.update(user_input)
         self.obstacle_manager.update(self)
-        #adicionado
         self.update_score()
-        self.power_up_manager.update(self.score, self.game_speed, self.player)
+        self.power_up_manager.update(self.score, self, self.player)
 
     #a cada 30 frames que se passa no jogo, ganhamos 1 ponto
     def update_score(self):
@@ -67,10 +67,9 @@ class Game:
         self.should_increase_speed()
 
     #verifica se a velocidade deve ser incrementada
-    #adicionado
     def should_increase_speed(self):
         if self.score % 100 == 0:
-            self.game_speed += 5
+            self.game_speed += 2
 
 
 
@@ -99,6 +98,9 @@ class Game:
         draw_message_component(
             f"S: {self.score}", self.screen, pos_x_center= 1000, pos_y_center=50
         )
+        draw_message_component(
+            f"G. speed: {self.game_speed}", self.screen, pos_x_center=500, pos_y_center=50
+        )
         if self.high_score > 0:
             draw_message_component(
                 f"HI: {self.high_score}", self.screen, pos_x_center= 850, pos_y_center= 50
@@ -111,7 +113,18 @@ class Game:
             time_to_show = round((self.player.power_up_time - pygame.time.get_ticks()) / 1000, 2)
             if time_to_show >= 0:
                 draw_message_component(f'{self.player.type.capitalize()} enabled for {time_to_show} seconds', self.screen, pos_x_center= 550, pos_y_center= 40)
+                if self.player.shield:
+                    self.screen.blit(SHIELD, ((SCREEN_WIDTH // 2) - (-450), (SCREEN_HEIGHT // 2) - 240))
+                elif self.player.hammer:
+                    self.screen.blit(HAMMER, ((SCREEN_WIDTH // 2) - (-450), (SCREEN_HEIGHT // 2) - 240))
+                else:
+                    self.screen.blit(CLOCK, ((SCREEN_WIDTH // 2) - (-450), (SCREEN_HEIGHT // 2) - 240))
+                if self.player.time_traveling and self.game_speed > self.old_game_speed:
+                    self.game_speed -= 1
             else:
+                self.player.shield = False
+                self.player.hammer = False
+                self.player.time_traveling = False
                 self.player.has_power_up = False
                 self.player.type = DEFAULT_TYPE
     def handle_events_on_menu(self):
