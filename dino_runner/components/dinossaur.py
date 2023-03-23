@@ -2,7 +2,8 @@ import pygame
 
 from dino_runner.utils.constants import RUNNING, JUMPING, DUCKING, DEFAULT_TYPE, SHIELD_TYPE, DUCKING_SHIELD, \
     JUMPING_SHIELD, RUNNING_SHIELD, DUCKING_HAMMER, RUNNING_HAMMER, JUMPING_HAMMER, HAMMER_TYPE, CLOCK_TYPE, \
-    JUMPING_CLOCK, RUNNING_CLOCK, DUCKING_CLOCK
+    JUMPING_CLOCK, RUNNING_CLOCK, DUCKING_CLOCK, JUMPING_SOUND
+from dino_runner.utils.music_utils import play_sound
 
 X_POS = 80
 Y_POS = 310
@@ -43,6 +44,7 @@ class Dinosaur:
 
 
         if user_input[pygame.K_UP] and not self.dino_jump:
+            play_sound(JUMPING_SOUND)
             self.dino_jump = True
             self.dino_run = False
             self.dino_duck = False
@@ -60,6 +62,7 @@ class Dinosaur:
             self.step_index = 0
 
     def run(self):
+
         self.image = RUN_IMAGE[self.type][self.step_index // 5]
         self.dino_rect = self.image.get_rect()
         self.dino_rect.x = X_POS
@@ -67,6 +70,7 @@ class Dinosaur:
         self.step_index += 1
 
     def jump(self):
+
         self.image = JUMP_IMAGE[self.type]
         if self.dino_jump:
             self.dino_rect.y -= self.jump_vel * 4

@@ -1,9 +1,10 @@
 import pygame
 
 from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, CLOCK, SHIELD, \
-    HAMMER
+    HAMMER, SCORE_SOUND, DINO_DEAD
 from dino_runner.components.dinossaur import Dinosaur
 from dino_runner.components.obstacles.obstacleManager import ObstacleManager
+from dino_runner.utils.music_utils import play_sound
 from dino_runner.utils.text_utils import draw_message_component
 from dino_runner.components.power_ups.power_up_manager import PowerUpManager
 
@@ -70,6 +71,7 @@ class Game:
     def should_increase_speed(self):
         if self.score % 100 == 0:
             self.game_speed += 2
+            play_sound(SCORE_SOUND)
 
 
 
@@ -141,7 +143,7 @@ class Game:
         else:
             if self.score > self.high_score:
                 self.high_score = self.score
-            self.screen.blit(ICON, ((SCREEN_WIDTH // 2) - 40, (SCREEN_HEIGHT // 2) - 100))
+            self.screen.blit(DINO_DEAD , ((SCREEN_WIDTH // 2) - 40, (SCREEN_HEIGHT // 2) - 100))
             draw_message_component(f'High Score: {self.high_score}', self.screen, pos_y_center= (SCREEN_HEIGHT // 2) - 180)
             draw_message_component(f'You died {self.death_count} times and scored {self.score}', self.screen, pos_y_center= 350)
             # self.create_text('Press any key to start',  (SCREEN_WIDTH // 2) - 40, (SCREEN_HEIGHT // 2) -40)

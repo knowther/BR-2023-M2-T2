@@ -1,8 +1,9 @@
 import pygame
 from random import randint
 from dino_runner.components.obstacles.bird import Bird
-from dino_runner.utils.constants import SMALL_CACTUS, LARGE_CACTUS
+from dino_runner.utils.constants import SMALL_CACTUS, LARGE_CACTUS, DIE_SOUND
 from dino_runner.components.obstacles.cactus import Cactus
+from dino_runner.utils.music_utils import play_sound
 
 
 class ObstacleManager:
@@ -36,6 +37,7 @@ class ObstacleManager:
                     pass
                 else:
                     pygame.time.delay(500)
+                    play_sound(DIE_SOUND)
                     game.playing = False
                     game.death_count += 1
 

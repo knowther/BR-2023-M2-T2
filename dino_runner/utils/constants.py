@@ -10,6 +10,7 @@ IMG_DIR = os.path.join(os.path.dirname(__file__), "..", "assets")
 
 # Assets Constants
 ICON = pygame.image.load(os.path.join(IMG_DIR, "DinoWallpaper.png"))
+DINO_DEAD = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDead.png"))
 
 RUNNING = [
     pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoRun1.png")),
@@ -76,6 +77,10 @@ CLOUD = pygame.image.load(os.path.join(IMG_DIR, 'Other/Cloud.png'))
 SHIELD = pygame.image.load(os.path.join(IMG_DIR, 'Other/shield.png'))
 HAMMER = pygame.image.load(os.path.join(IMG_DIR, 'Other/hammer.png'))
 CLOCK = pygame.image.load(os.path.join(IMG_DIR, 'Other/clock_time.png'))
+
+JUMPING_SOUND = os.path.join("dino_runner", "assets", "Sounds/jump.wav")
+SCORE_SOUND = os.path.join("dino_runner", "assets", "Sounds/point.wav")
+DIE_SOUND = os.path.join("dino_runner", "assets", "Sounds/die.wav")
 
 BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/Track.png'))
 
