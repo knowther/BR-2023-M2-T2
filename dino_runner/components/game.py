@@ -24,6 +24,7 @@ class Game:
         self.score = 0
         self.death_count = 0
         self.high_score = 0
+        #variável definida pra receber o gamespeed antes de pegar o power_up
         self.old_game_speed = 0
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
@@ -56,7 +57,8 @@ class Game:
 
     def update(self):
         user_input = pygame.key.get_pressed()
-        self.player.update(user_input)
+        self.player.key_pressed = user_input
+        self.player.update()
         self.obstacle_manager.update(self)
         self.update_score()
         self.power_up_manager.update(self.score, self, self.player)
@@ -101,7 +103,7 @@ class Game:
             f"S: {self.score}", self.screen, pos_x_center= 1000, pos_y_center=50
         )
         draw_message_component(
-            f"G. speed: {self.game_speed}", self.screen, pos_x_center=500, pos_y_center=50
+            f"G. speed: {self.game_speed}", self.screen, pos_x_center=150, pos_y_center=50
         )
         if self.high_score > 0:
             draw_message_component(
@@ -121,6 +123,12 @@ class Game:
                     self.screen.blit(HAMMER, ((SCREEN_WIDTH // 2) - (-450), (SCREEN_HEIGHT // 2) - 240))
                 else:
                     self.screen.blit(CLOCK, ((SCREEN_WIDTH // 2) - (-450), (SCREEN_HEIGHT // 2) - 240))
+
+                #ponto de balanceamento: se a gamespeed fosse as mesmas 50 durante o efeito do power_up, iria ficar difícil pra o jogador não morrer quando
+                #acabasse pois estava muito rápido e acontecia do powerup acabar e você acabar batendo em um obstáculo.
+                #para contornar isso fiz o seguinte, atribui a velocidade antes de pegar o relógio pra uma varíavel chamada old_game_speed
+                #e então a cada segundo ela vai decrementando o gamespeed atual até o velocidade atual ser menor que a antiga
+                #fazendo um efeito de aceleração imediata mas depois decaindo.
                 if self.player.time_traveling and self.game_speed > self.old_game_speed:
                     self.game_speed -= 1
             else:

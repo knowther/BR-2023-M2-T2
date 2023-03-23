@@ -28,14 +28,14 @@ RUNNING_HAMMER = [
 ]
 
 RUNNING_CLOCK = [
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoRun1.png")),
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoRun2.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoRun1Clock.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoRun2Clock.png")),
 ]
 
 JUMPING = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoJump.png"))
 JUMPING_SHIELD = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoJumpShield.png"))
 JUMPING_HAMMER = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoJumpHammer.png"))
-JUMPING_CLOCK = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoJump.png"))
+JUMPING_CLOCK = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoJumpClock.png"))
 
 DUCKING = [
     pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck1.png")),
@@ -53,8 +53,8 @@ DUCKING_HAMMER = [
 ]
 
 DUCKING_CLOCK = [
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck1.png")),
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck2.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck1Clock.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck2Clock.png")),
 ]
 
 SMALL_CACTUS = [
@@ -81,6 +81,9 @@ CLOCK = pygame.image.load(os.path.join(IMG_DIR, 'Other/clock_time.png'))
 JUMPING_SOUND = os.path.join("dino_runner", "assets", "Sounds/jump.wav")
 SCORE_SOUND = os.path.join("dino_runner", "assets", "Sounds/point.wav")
 DIE_SOUND = os.path.join("dino_runner", "assets", "Sounds/die.wav")
+CLOCK_SOUND = os.path.join("dino_runner", "assets", "Sounds/Zilean_Original_E_SFX_1.ogg")
+SHIELD_SOUND = os.path.join("dino_runner", "assets", "Sounds/shield_effect.mp3")
+HAMMER_SOUND = os.path.join("dino_runner", "assets", "Sounds/hammering.mp3")
 
 BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/Track.png'))
 
