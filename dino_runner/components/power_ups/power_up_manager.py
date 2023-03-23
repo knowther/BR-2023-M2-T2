@@ -17,8 +17,9 @@ class PowerUpManager:
     def generate_power_up(self, score):
         power_up_type = [
             Shield(),
+            Clock(),
             Hammer(),
-            Clock()
+
         ]
         #se a lista de powerup estiver vazia, ele define quando o powerup vai aparecer +
         #no início da partida essa condição já é atendida e ele já define em que momento do jogo o power_up vai aparecer, quando a condição é atendida+
@@ -26,7 +27,7 @@ class PowerUpManager:
         if len(self.power_ups) == 0 and self.when_appears == score:
             #aqui escolhe um valor randômico entre 200 e 300 e incrementa no when_appears para o powerup aparecer após atingir essa nova pontuação
             self.when_appears += random.randint(200,300)
-            self.power_ups.append(power_up_type[random.randint[0,2]])
+            self.power_ups.append(power_up_type[random.randint(0,2)])
 
     def update(self, score, game, player):
         # if not player.has_power_up:
@@ -80,4 +81,4 @@ class PowerUpManager:
 
     def clen_power_ups(self):
         self.power_ups = []
-        self.when_appears = random.randint(200, 300)
+        self.when_appears = random.randint(100, 200)

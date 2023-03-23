@@ -1,7 +1,7 @@
 import pygame
 
 from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, CLOCK, SHIELD, \
-    HAMMER, SCORE_SOUND, DINO_DEAD
+    HAMMER, SCORE_SOUND, DINO_DEAD, DINO_START, GAME_OVER, CLOUD
 from dino_runner.components.dinossaur import Dinosaur
 from dino_runner.components.obstacles.obstacleManager import ObstacleManager
 from dino_runner.utils.music_utils import play_sound
@@ -91,9 +91,12 @@ class Game:
 
     def draw_background(self):
         image_width = BG.get_width()
+        self.screen.blit(CLOUD, (self.x_pos_bg + image_width, self.y_pos_bg - 300))
+        self.screen.blit(CLOUD, (self.x_pos_bg + 1700, self.y_pos_bg - 150))
         self.screen.blit(BG, (self.x_pos_bg, self.y_pos_bg))
         self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
         if self.x_pos_bg <= -image_width:
+
             self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
             self.x_pos_bg = 0
         self.x_pos_bg -= self.game_speed
@@ -116,7 +119,7 @@ class Game:
         if self.player.has_power_up:
             time_to_show = round((self.player.power_up_time - pygame.time.get_ticks()) / 1000, 2)
             if time_to_show >= 0:
-                draw_message_component(f'{self.player.type.capitalize()} enabled for {time_to_show} seconds', self.screen, pos_x_center= 550, pos_y_center= 40)
+                draw_message_component(f'{self.player.type.capitalize()} enabled for {time_to_show} seconds', self.screen, pos_x_center= 550, pos_y_center= 80)
                 if self.player.shield:
                     self.screen.blit(SHIELD, ((SCREEN_WIDTH // 2) - (-450), (SCREEN_HEIGHT // 2) - 240))
                 elif self.player.hammer:
@@ -145,13 +148,23 @@ class Game:
             elif event.type == pygame.KEYDOWN:
                 self.run()
     def show_menu(self):
+        #aqui preenche a tela de braco
         self.screen.fill((255,255,255))
+        #desenha o background na tela
+        self.screen.blit(BG, (self.x_pos_bg, self.y_pos_bg))
+        #desenha o player na tela
+        self.player.draw(self.screen)
+        #define a imagem do player
+        self.player.image = DINO_START
         if self.death_count == 0:
             draw_message_component('Press any key to start', self.screen)
         else:
             if self.score > self.high_score:
                 self.high_score = self.score
-            self.screen.blit(DINO_DEAD , ((SCREEN_WIDTH // 2) - 40, (SCREEN_HEIGHT // 2) - 100))
+
+                #game over adicionado aqui
+            self.player.image = DINO_DEAD
+            self.screen.blit(GAME_OVER , (SCREEN_WIDTH // 2 - 200, SCREEN_HEIGHT // 2 - 100))
             draw_message_component(f'High Score: {self.high_score}', self.screen, pos_y_center= (SCREEN_HEIGHT // 2) - 180)
             draw_message_component(f'You died {self.death_count} times and scored {self.score}', self.screen, pos_y_center= 350)
             # self.create_text('Press any key to start',  (SCREEN_WIDTH // 2) - 40, (SCREEN_HEIGHT // 2) -40)
